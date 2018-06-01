@@ -16,10 +16,10 @@ build/google_dense_hash_map: src/google_dense_hash_map.cc Makefile src/template.
 	g++ -O2 -lm src/google_dense_hash_map.cc -o build/google_dense_hash_map
 
 build/qt_qhash: src/qt_qhash.cc Makefile src/template.c
-	g++ -O2 -lm `pkg-config --cflags --libs QtCore` src/qt_qhash.cc -o build/qt_qhash
+	g++ -O2 -lm `pkg-config --cflags --libs Qt5Core` -fPIC src/qt_qhash.cc -o build/qt_qhash
 
 build/python_dict: src/python_dict.c Makefile src/template.c
-	gcc -O2 -lm -I/usr/include/python2.6 -lpython2.6 src/python_dict.c -o build/python_dict
+	gcc -O2 -lm -I/usr/include/python2.7 -lpython2.7 src/python_dict.c -o build/python_dict
 
 build/ruby_hash: src/ruby_hash.c Makefile src/template.c
-	gcc -O2 -lm -I/usr/include/ruby-1.9.0 -I /usr/include/ruby-1.9.0/x86_64-linux -lruby1.9 src/ruby_hash.c -o build/ruby_hash
+	gcc -O2 -lm -I/usr/include/ruby-2.5.0 -I/usr/include/ruby-2.5.0/x86_64-linux-gnu -lruby2.5 src/ruby_hash.c -o build/ruby_hash
