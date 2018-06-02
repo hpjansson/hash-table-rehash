@@ -40,6 +40,12 @@ int main(int argc, char ** argv)
             INSERT_INT_INTO_HASH(i, value);
     }
 
+    else if(!strcmp(argv[2], "spaced"))
+    {
+        for(i = 0; i < num_keys; i++)
+            INSERT_INT_INTO_HASH(i * 256, value);
+    }
+
     else if(!strcmp(argv[2], "random"))
     {
         srandom(1); // for a fair/deterministic comparison
@@ -54,6 +60,27 @@ int main(int argc, char ** argv)
         before = get_time();
         for(i = 0; i < num_keys; i++)
             DELETE_INT_FROM_HASH(i);
+
+        /* Required to make some implementations release memory */
+        INSERT_INT_INTO_HASH(1, value);
+    }
+
+    else if(!strcmp(argv[2], "aging"))
+    {
+        srandom(1); // for a fair/deterministic comparison
+
+        /* First populate the table */
+        for(i = 0; i < num_keys; i++)
+            INSERT_INT_INTO_HASH((int)random() % num_keys, value);
+
+        before = get_time();
+
+        /* Randomly insert and delete keys for a bit */
+        for(i = 0; i < num_keys; i++)
+        {
+            DELETE_INT_FROM_HASH((int)random() % num_keys);
+            INSERT_INT_INTO_HASH((int)random() % num_keys, value);
+        }
     }
 
     else if(!strcmp(argv[2], "sequentialstring"))

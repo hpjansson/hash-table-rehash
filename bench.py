@@ -11,9 +11,9 @@ programs = [
     'ruby_hash',
 ]
 
-minkeys  =  2*1000*1000
-maxkeys  = 40*1000*1000
-interval =  2*1000*1000
+minkeys  =       100 * 1000
+maxkeys  =  5 * 1000 * 1000
+interval =  1 * 1000 * 1000
 best_out_of = 2
 
 # for the final run, use this:
@@ -30,7 +30,7 @@ outfile = open('output', 'w')
 if len(sys.argv) > 1:
     benchtypes = sys.argv[1:]
 else:
-    benchtypes = ('sequential', 'random', 'delete', 'sequentialstring', 'randomstring', 'deletestring')
+    benchtypes = ('sequential', 'spaced', 'random', 'delete', 'aging')
 
 for benchtype in benchtypes:
     nkeys = minkeys
@@ -38,6 +38,11 @@ for benchtype in benchtypes:
         for program in programs:
             fastest_attempt = 1000000
             fastest_attempt_data = ''
+
+            # Spaced integers break Google sparsehash. Cap its iterations so
+            # it doesn't take forever.
+            if nkeys >= 5000000 and 'google_' in program and benchtypes is 'spaced':
+                continue
 
             for attempt in range(best_out_of):
                 proc = subprocess.Popen(['./build/'+program, str(nkeys), benchtype], stdout=subprocess.PIPE)
