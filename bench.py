@@ -41,7 +41,7 @@ for benchtype in benchtypes:
 
             # Spaced integers break Google sparsehash. Cap its iterations so
             # it doesn't take forever.
-            if nkeys >= 5000000 and 'google_' in program and benchtypes is 'spaced':
+            if nkeys >= 5000000 and 'google_' in program and benchtype is 'spaced':
                 continue
 
             for attempt in range(best_out_of):
