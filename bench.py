@@ -53,8 +53,25 @@ for benchtype in benchtypes:
                 except:
                     runtime = 0
 
-                ps_proc = subprocess.Popen(['ps up %d | tail -n1' % proc.pid], shell=True, stdout=subprocess.PIPE)
-                nbytes = int(ps_proc.stdout.read().split()[4]) * 1024
+                # pmap output can look like this:
+                #
+                # 3646:   bash
+                # 0000564b4a271000     964       0       0       0       0 r-xp- /bin/bash
+                # ...
+                #
+                # We use tail to skip the first line. The columns we're looking for are
+                # 'Dirty' plus 'Swap' -- columns 4 and 5, counting from 0.
+
+                ps_proc = subprocess.Popen(['pmap -q %d | tail -n+2' % proc.pid], shell=True, stdout=subprocess.PIPE)
+                nbytes = 0
+                while True:
+                    line = ps_proc.stdout.readline()
+#                    print line
+                    try:
+                        nbytes += (int(line.split()[4]) + int(line.split()[5])) * 1024
+                    except:
+                        break
+
                 ps_proc.wait()
 
                 os.kill(proc.pid, signal.SIGKILL)
