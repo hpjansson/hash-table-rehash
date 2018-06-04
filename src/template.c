@@ -50,7 +50,7 @@ int main(int argc, char ** argv)
     {
         srandom(1); // for a fair/deterministic comparison
         for(i = 0; i < num_keys; i++)
-            INSERT_INT_INTO_HASH((int)random(), value);
+            INSERT_INT_INTO_HASH((int)random() & 0x0fffffff, value);
     }
 
     else if(!strcmp(argv[2], "delete"))
