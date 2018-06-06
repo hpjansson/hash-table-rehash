@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#define STR_MAX 256
+
 double get_time(void)
 {
     struct timeval tv;
@@ -14,18 +16,17 @@ double get_time(void)
     return tv.tv_sec + (tv.tv_usec / 1000000.0);
 }
 
-char * new_string_from_integer(int num)
+static void
+gen_string_from_integer(char *str_out, int num)
 {
-    int ndigits = num == 0 ? 1 : (int)log10(num) + 1;
-    char * str = (char *)malloc(ndigits + 1);
-    sprintf(str, "%d", num);
-    return str;
+    snprintf(str_out, STR_MAX, "mystring-%d", num);
 }
 
 int main(int argc, char ** argv)
 {
     int num_keys = atoi(argv[1]);
-    int i, value = 0;
+    int i, value = 0xcafecafe;
+    char str [STR_MAX];
 
     if(argc <= 2)
         return 1;
@@ -86,23 +87,60 @@ int main(int argc, char ** argv)
     else if(!strcmp(argv[2], "sequentialstring"))
     {
         for(i = 0; i < num_keys; i++)
-            INSERT_STR_INTO_HASH(new_string_from_integer(i), value);
+        {
+            gen_string_from_integer (str, i);
+            INSERT_STR_INTO_HASH (str, value);
+        }
     }
 
     else if(!strcmp(argv[2], "randomstring"))
     {
         srandom(1); // for a fair/deterministic comparison
         for(i = 0; i < num_keys; i++)
-            INSERT_STR_INTO_HASH(new_string_from_integer((int)random()), value);
+        {
+            gen_string_from_integer (str, random ());
+            INSERT_STR_INTO_HASH (str, value);
+        }
     }
 
     else if(!strcmp(argv[2], "deletestring"))
     {
         for(i = 0; i < num_keys; i++)
-            INSERT_STR_INTO_HASH(new_string_from_integer(i), value);
+        {
+            gen_string_from_integer (str, i);
+            INSERT_STR_INTO_HASH (str, value);
+        }
+
         before = get_time();
         for(i = 0; i < num_keys; i++)
-            DELETE_STR_FROM_HASH(new_string_from_integer(i));
+        {
+            gen_string_from_integer (str, i);
+            DELETE_STR_FROM_HASH (str);
+        }
+    }
+
+    else if(!strcmp(argv[2], "agingstring"))
+    {
+        srandom(1); // for a fair/deterministic comparison
+
+        /* First populate the table */
+        for(i = 0; i < num_keys; i++)
+        {
+            gen_string_from_integer (str, random () % num_keys);
+            INSERT_STR_INTO_HASH (str, value);
+        }
+
+        before = get_time();
+
+        /* Randomly insert and delete keys for a bit */
+        for(i = 0; i < num_keys; i++)
+        {
+            gen_string_from_integer (str, random() % num_keys);
+            DELETE_STR_FROM_HASH (str);
+
+            gen_string_from_integer (str, random() % num_keys);
+            INSERT_STR_INTO_HASH (str, value);
+        }
     }
 
     double after = get_time();
