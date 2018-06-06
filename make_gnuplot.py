@@ -32,6 +32,7 @@ proper_names = {
     'qt_qhash': 'Qt 5.10 QHash',
     'python_dict': 'Python 2.7 (C API) dict',
     'ruby_hash': 'Ruby 2.5 (C API) Hash',
+    'khash': 'khash 2018-06'
 }
 
 # do them in the desired order to make the legend not overlap the chart data
@@ -45,6 +46,7 @@ program_slugs = [
     'ruby_hash',
     'glib_hash_table',
     'qt_qhash',
+    'khash'
 ]
 
 try:
