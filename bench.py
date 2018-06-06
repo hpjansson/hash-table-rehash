@@ -9,6 +9,7 @@ programs = [
     'qt_qhash',
     'python_dict',
     'ruby_hash',
+    'khash'
 ]
 
 minkeys  =       100 * 1000
