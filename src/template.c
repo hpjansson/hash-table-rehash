@@ -143,6 +143,34 @@ int main(int argc, char ** argv)
         }
     }
 
+    else if(!strcmp(argv[2], "small"))
+    {
+        int keys_per_table = num_keys / 10000;
+        int j;
+
+        srandom(1); // for a fair/deterministic comparison
+
+        for (j = 0; j < 10000; j++)
+        {
+            /* First populate the table */
+            for(i = 0; i < keys_per_table; i++)
+                INSERT_INT_INTO_HASH((int)random() % keys_per_table, value);
+
+            /* Randomly insert and delete keys for a bit */
+            for(i = 0; i < keys_per_table * 4; i++)
+            {
+                DELETE_INT_FROM_HASH((int)random() % keys_per_table);
+                INSERT_INT_INTO_HASH((int)random() % keys_per_table, value);
+            }
+
+            /* Delete all keys */
+            for(i = 0; i < keys_per_table; i++)
+            {
+                DELETE_INT_FROM_HASH(i);
+            }
+        }
+    }
+
     double after = get_time();
     printf("%f\n", after-before);
     fflush(stdout);
