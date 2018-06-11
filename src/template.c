@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <math.h>
+#include <malloc.h>
 
 #define STR_MAX 256
 
@@ -172,6 +173,8 @@ int main(int argc, char ** argv)
     }
 
     double after = get_time();
+
+    malloc_trim (0);
     printf("%f\n", after-before);
     fflush(stdout);
     sleep(1000000);
