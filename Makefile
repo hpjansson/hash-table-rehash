@@ -1,4 +1,7 @@
-all: build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/python2_dict build/python3_dict build/ruby_hash build/khash
+all: build/treadmill build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/python2_dict build/python3_dict build/ruby_hash build/khash
+
+build/treadmill: src/treadmill.c Makefile
+	gcc -O2 -g -lm `pkg-config --cflags --libs glib-2.0` src/treadmill.c -o build/treadmill
 
 build/glib_hash_table: src/glib_hash_table.c Makefile src/template.c
 	gcc -ggdb -O2 -g -lm `pkg-config --cflags --libs glib-2.0` src/glib_hash_table.c -o build/glib_hash_table

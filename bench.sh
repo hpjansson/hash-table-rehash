@@ -47,7 +47,7 @@ for UNIT in $UNITS; do
     eval DESC=\${DESC_${UNIT}}
 
     echo \"${DESC}\" >>results/$TEST.txt
-    ../treadmill/treadmill build/$UNIT 20000000 $TEST >>results/$TEST.txt
+    build/treadmill build/$UNIT 20000000 $TEST >>results/$TEST.txt
     echo >>results/$TEST.txt
     echo >>results/$TEST.txt
 
