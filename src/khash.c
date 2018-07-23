@@ -17,5 +17,8 @@ KHASH_MAP_INIT_STR(khstr, void *)
 #define DELETE_STR_FROM_HASH(key) \
   do { khint_t k = kh_get (khstr, str_hash, key); \
        if (k != kh_end (hash)) { char *istr = (char *) kh_key (str_hash, k); kh_del (khstr, str_hash, k); free (istr); } } while (0)
+#define LOOKUP_INT(key) \
+    do { khint_t k = kh_get (kh64, hash, key);                          \
+        if (k != kh_end (hash)) { volatile void *v = kh_value (hash, k); } } while (0);
 
 #include "template.c"

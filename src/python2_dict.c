@@ -20,4 +20,10 @@ typedef PyObject * hash_t;
 #define DELETE_STR_FROM_HASH(key) do { \
         PyDict_DelItemString(hash, key); \
     } while(0)
+#define LOOKUP_INT(key) do { \
+        PyObject * py_int_key = PyInt_FromLong(key); \
+        /* Borrowed reference */ \
+        volatile PyObject *v = PyDict_GetItem (hash, py_int_key); \
+        Py_DECREF (py_int_key); \
+    } while (0);
 #include "template.c"
