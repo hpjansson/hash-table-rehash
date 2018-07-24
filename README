@@ -37,3 +37,7 @@ Written by Nick Welch in 2010.
 Modified by Hans Petter Jansson in 2018.
 No copyright.  This work is dedicated to the public domain.
 For full details, see http://creativecommons.org/publicdomain/zero/1.0/
+
+The included khash implementation in src/khash-impl.h is copyright (c) by
+Attractive Chaos <attractor@live.co.uk> and released under the MIT
+license. See that file for more information.
