@@ -1,4 +1,4 @@
-all: build/treadmill build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/python2_dict build/python3_dict build/ruby_hash build/khash
+all: build/treadmill build/glib_hash_table build/stl_unordered_map build/boost_unordered_map build/google_sparse_hash_map build/google_dense_hash_map build/qt_qhash build/python2_dict build/python3_dict build/ruby_hash build/rust_hash_map build/khash
 
 COMMON=Makefile build/.dummy
 
@@ -37,6 +37,10 @@ build/python3_dict: $(COMMON) src/python3_dict.c src/template.c
 
 build/ruby_hash: $(COMMON) src/ruby_hash.c src/template.c
 	gcc -O2 -g -lm -I/usr/include/ruby-2.5.0 -I/usr/include/ruby-2.5.0/x86_64-linux-gnu -lruby2.5 src/ruby_hash.c -o build/ruby_hash
+
+build/rust_hash_map: $(COMMON) src/rust_hash_map.c src/rust_hash_map.h src/rust_hash_map.rs src/template.c
+	rustc -O -g src/rust_hash_map.rs -o build/librust_hash_map.a
+	gcc -O2 -g -lm -lpthread -ldl src/rust_hash_map.c build/librust_hash_map.a -o build/rust_hash_map
 
 build/khash: $(COMMON) src/khash.c src/template.c
 	gcc -O2 -g -lm src/khash.c -o build/khash
