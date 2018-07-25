@@ -9,6 +9,7 @@ DESC_stl_unordered_map="GCC 7.2 std::unordered_map"
 DESC_python3_dict="Python 3.6.5 (C API) dict"
 DESC_qt_qhash="Qt 5.10 QHash"
 DESC_ruby_hash="Ruby 2.5 (C API) hash"
+DESC_rust_hash_map="Rust 1.27.2 HashMap"
 
 UNITS=" \
 boost_unordered_map \
@@ -19,6 +20,7 @@ khash \
 python3_dict \
 qt_qhash \
 ruby_hash \
+rust_hash_map \
 stl_unordered_map \
 "
 
