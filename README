@@ -1,4 +1,17 @@
-How to run these benchmarks:
+Introduction
+============
+
+You can read more about these benchmarks and how they were used at:
+
+https://hpjansson.org/blag/2018/07/24/a-hash-table-re-hash/
+
+and
+
+https://hpjansson.org/blag/2018/08/29/what-ails-ghashtable/
+
+
+How to run these benchmarks
+===========================
 
 First, some prerequisites are:
 
@@ -30,6 +43,7 @@ To run the benchmark at the highest priority possible, do this:
 You might also want to disable any swap files/partitions so that swapping
 doesn't influence performance.  (The programs will just die if they try to
 allocate too much memory.)
+
 
 Copyright Information
 =====================
